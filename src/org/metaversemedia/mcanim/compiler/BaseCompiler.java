@@ -16,7 +16,7 @@ import java.nio.file.Path;
  * @author Igrium
  *
  */
-public abstract class Compiler {
+public abstract class BaseCompiler {
 	
 	/**
 	 * Compile a JSON object used to store animations in production to a runnable function file
@@ -38,7 +38,6 @@ public abstract class Compiler {
 		JSONArray frames = animation.getJSONArray("frames");
 		for (int i = 0; i < frames.length(); i++) {
 			compileFrame(animation, frames.getJSONObject(i), i, writer);
-			writer.newLine();
 		}
 		writer.newLine();
 		
@@ -46,7 +45,6 @@ public abstract class Compiler {
 		JSONArray commands = animation.getJSONArray("commands");
 		for (int i = 0; i < commands.length(); i++) {
 			writeCommand(commands.getJSONObject(i), writer);
-			writer.newLine();
 		}
 		
 		writer.write("scoreboard players add @s "+ Constants.FRAMEOBJECTIVE + " 1");

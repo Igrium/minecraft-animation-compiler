@@ -47,7 +47,7 @@ public class TransformCompiler extends BaseCompiler {
 	}
 	
 	// Method to turn JSONArrays to vectors
-	private Vector JSONArrayToVector(JSONArray array) throws JSONException {
+	protected Vector JSONArrayToVector(JSONArray array) throws JSONException {
 		return new Vector(array.getDouble(0), array.getDouble(1), array.getDouble(2));
 	}
 

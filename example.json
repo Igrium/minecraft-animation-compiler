@@ -1,0 +1,10 @@
+{ 
+	"name":"aniamtion name",
+	"id":5,
+	"frames":[
+		{'data':"here's where frame data goes"}
+	],
+	"commands":[
+		{'frame':1, 'contents':"say minecraft command goes here"}
+	]
+}

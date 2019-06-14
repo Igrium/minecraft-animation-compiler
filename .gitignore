@@ -97,3 +97,5 @@ local.properties
 .sts4-cache/
 
 # End of https://www.gitignore.io/api/eclipse
+
+test/

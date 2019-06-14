@@ -29,7 +29,7 @@ public abstract class BaseCompiler {
 		String filename = "anim"+Integer.toString(animation.getInt("id"));
 		
 		// Generate writer
-		File outputFile = new File(outputDir.toString(), filename);	
+		File outputFile = new File(outputDir.toString(), filename+".mcfunction");	
 		BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
 		
 		writeMetadata(animation, writer);

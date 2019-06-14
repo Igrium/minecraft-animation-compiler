@@ -40,7 +40,7 @@ public class TransformCompiler extends BaseCompiler {
 		
 		// Write command
 		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+frame+"}] ~"+
-				relativeCoords.X()+" ~"+relativeCoords.Y()+" ~"+relativeCoords.Z()+" ~"+xRot+" ~"+yRot);
+				relativeCoords.X()+" ~"+relativeCoords.Y()+" ~"+relativeCoords.Z()+" "+xRot+" "+yRot);
 		
 		writer.newLine();
 

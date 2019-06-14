@@ -1,6 +1,9 @@
 { 
 	"name":"aniamtion name",
+	"type":"transform",
 	"id":5,
+	"looping":false,
+	"resetWhenDone":false,
 	"frames":[
 		{
 			"loc":[5,0,0],

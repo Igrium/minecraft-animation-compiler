@@ -16,6 +16,7 @@ import org.metaversemedia.mcanim.util.Vector;
  *
  */
 public class TransformCompiler extends BaseCompiler {
+	
 
 	@Override
 	public void compileFrame(JSONObject animation, JSONObject frameObject, int frame, BufferedWriter writer)
@@ -40,7 +41,8 @@ public class TransformCompiler extends BaseCompiler {
 		
 		// Write command
 		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+frame+"}] ~"+
-				relativeCoords.X()+" ~"+relativeCoords.Y()+" ~"+relativeCoords.Z()+" "+xRot+" "+yRot);
+				String.format("%.10f",relativeCoords.X())+" ~"+String.format("%.10f",relativeCoords.Y())+
+				" ~"+String.format("%.10f",relativeCoords.Z())+" "+xRot+" "+yRot);
 		
 		writer.newLine();
 

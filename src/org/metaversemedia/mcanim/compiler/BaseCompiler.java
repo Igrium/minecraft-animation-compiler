@@ -20,7 +20,7 @@ public abstract class BaseCompiler {
 	
 	/**
 	 * Compile a JSON object used to store animations in production to a runnable function file
-	 * @param input JSON object to compile
+	 * @param animation JSON object to compile
 	 * @param outputDir Directory to compile to
 	 * @throws JSONException, IOException
 	 */
@@ -50,6 +50,28 @@ public abstract class BaseCompiler {
 		writer.write("scoreboard players add @s "+ Constants.FRAMEOBJECTIVE + " 1");
 		
 		writer.close();
+	}
+	
+	/**
+	 * Determine the appropriate compiler and compile
+	 * @param animation input JSON object to compile
+	 * @param outputDir Directory to compile to
+	 * @throws JSONException
+	 * @throws IOException
+	 */
+	public static void smartCompile(JSONObject animation, Path outputDir) throws JSONException, IOException {
+		BaseCompiler compiler = null;
+		String type = animation.getString("type");
+		
+		if (type.equals("transform")) {
+			compiler = new TransformCompiler(); 
+		} else {
+			System.out.println("Unknown type: "+type);
+			throw new JSONException("Unknown type: "+type);
+		}
+		
+		compiler.compile(animation, outputDir);
+		return;
 	}
 	
 	// Writes the metadata at the top of the animation

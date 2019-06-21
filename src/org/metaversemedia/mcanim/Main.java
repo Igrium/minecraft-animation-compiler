@@ -1,5 +1,6 @@
 package org.metaversemedia.mcanim;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,6 +25,9 @@ public class Main {
 		JSONObject animation = null;
 		try {
 			animation = loadJSON(args[0]);
+			// Set name of animation
+			animation.put("name", getFilename(args[0]));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Unable to read file!");
@@ -54,6 +58,24 @@ public class Main {
 		JSONObject animation = new JSONObject(String.join("", jsonFile));
 		
 		return animation;
+	}
+	
+	/**
+	 * Gets the name of a file without the extension
+	 * @param filePath
+	 * @return
+	 */
+	private static String getFilename(String filePath) {
+		File file = new File(filePath);
+		String fileName = file.getName();
+		
+		// Return filename without extension
+		if (fileName.indexOf(".") > 0) {
+			   return fileName.substring(0, fileName.lastIndexOf("."));
+			} else {
+			   return fileName;
+			}
+		
 	}
 
 }

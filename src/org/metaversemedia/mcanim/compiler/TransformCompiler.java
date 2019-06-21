@@ -48,6 +48,24 @@ public class TransformCompiler extends BaseCompiler {
 
 	}
 	
+	@Override
+	public void reset(JSONObject animation, BufferedWriter writer) throws JSONException, IOException {
+		// Get the current offset from the start position
+		int length = animation.getJSONArray("frames").length();
+		JSONObject frame = animation.getJSONArray("frames").getJSONObject(length-1);
+		Vector locOffset = JSONArrayToVector(frame.getJSONArray("loc"));
+		
+		// Calculate and write the needed teleport command to arrive at position 1
+		Vector desiredTeleport = Vector.multiply(locOffset, -1);
+		
+		float xRot = (float)frame.getJSONArray("rot").getDouble(0);
+		float yRot = (float)frame.getJSONArray("rot").getDouble(1);
+		
+		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+length+"}] ~"+
+				String.format("%.10f",desiredTeleport.X())+" ~"+String.format("%.10f",desiredTeleport.Y())+
+				" ~"+String.format("%.10f",desiredTeleport.Z())+" "+xRot+" "+yRot);
+	}
+	
 	// Method to turn JSONArrays to vectors
 	protected Vector JSONArrayToVector(JSONArray array) throws JSONException {
 		return new Vector(array.getDouble(0), array.getDouble(1), array.getDouble(2));

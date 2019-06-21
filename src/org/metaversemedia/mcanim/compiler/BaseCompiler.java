@@ -47,8 +47,20 @@ public abstract class BaseCompiler {
 			writeCommand(commands.getJSONObject(i), writer);
 		}
 		
+		// Increment frame before checking for end of animation because the last real frame is 1 less than the length 
+		// [0,1,2] length is 3
 		writer.write("scoreboard players add @s "+ Constants.FRAMEOBJECTIVE + " 1");
+		writer.newLine();
 		
+		// Write looping and reset code
+		if (animation.getBoolean("resetWhenDone")) {
+			reset(animation, writer);
+			writer.newLine();
+		}
+		
+		if (animation.getBoolean("looping")) {
+			writer.write("scoreboard players set @s[scores={"+ Constants.FRAMEOBJECTIVE+"="+frames.length()+"}] "+Constants.FRAMEOBJECTIVE+" 0");
+		}
 		writer.close();
 	}
 	
@@ -106,4 +118,13 @@ public abstract class BaseCompiler {
 	 * @return success
 	 */
 	public abstract void compileFrame(JSONObject animation, JSONObject frameObject, int frame, BufferedWriter writer) throws JSONException, IOException;
+	
+	/**
+	 * Compile Minecraft code to reset entity to it's original state after animation completes.
+	 * @param animation
+	 * @param writer
+	 * @throws JSONException
+	 * @throws IOException
+	 */
+	public abstract void reset(JSONObject animation, BufferedWriter writer) throws JSONException, IOException;
 }

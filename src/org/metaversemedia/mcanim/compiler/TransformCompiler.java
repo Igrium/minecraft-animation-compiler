@@ -23,26 +23,43 @@ public class TransformCompiler extends BaseCompiler {
 			throws JSONException, IOException {
 		
 		// Get previous frame and calculate relative coordinates if not frame 1
-		Vector relativeCoords = null;
+		Vector coords = null;
 		
 		if (frame != 0) {
 			JSONObject lastFrame = animation.getJSONArray("frames").getJSONObject(frame-1);
 			Vector lastCoords = JSONArrayToVector(lastFrame.getJSONArray("loc"));
 			Vector currentCoords = JSONArrayToVector(frameObject.getJSONArray("loc"));
 			
-			relativeCoords = Vector.subtract(currentCoords, lastCoords);
+			coords = Vector.subtract(currentCoords, lastCoords);
 		} else {
-			relativeCoords = JSONArrayToVector(frameObject.getJSONArray("loc"));
+			coords = JSONArrayToVector(frameObject.getJSONArray("loc"));
 		}
 		
 		// Get rotation
-		float xRot = (float)frameObject.getJSONArray("rot").getDouble(0);
-		float yRot = (float)frameObject.getJSONArray("rot").getDouble(1);
+			float xRot = (float)frameObject.getJSONArray("rot").getDouble(0);
+			float yRot = (float)frameObject.getJSONArray("rot").getDouble(1);
+		
+		// Convert to local space in terms of previous frame by aligning forward vector to world
+		float oldXRot = 0;
+		float oldYRot = 0;
+		if (frame != 0) {
+			JSONObject lastFrame = animation.getJSONArray("frames").getJSONObject(frame-1);
+			oldXRot = (float) lastFrame.getJSONArray("rot").getDouble(0);
+			oldYRot = (float) lastFrame.getJSONArray("rot").getDouble(1);
+		}
+		Vector localCoords = coords.rotateDegrees(oldYRot*-1, oldXRot*-1, 0);
+		
+		// Get rotation difference
+		if (frame != 0) {
+			JSONObject lastFrame = animation.getJSONArray("frames").getJSONObject(frame-1);
+			xRot = (float) (xRot - lastFrame.getJSONArray("rot").getDouble(0));
+			yRot = (float) (yRot - lastFrame.getJSONArray("rot").getDouble(1));
+		}
 		
 		// Write command
-		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+frame+"}] ~"+
-				String.format("%.10f",relativeCoords.X())+" ~"+String.format("%.10f",relativeCoords.Y())+
-				" ~"+String.format("%.10f",relativeCoords.Z())+" "+xRot+" "+yRot);
+		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+frame+"}] ^"+
+				String.format("%.10f",localCoords.X())+" ^"+String.format("%.10f",localCoords.Y())+
+				" ^"+String.format("%.10f",localCoords.Z())+" ~"+xRot+" ~"+yRot);
 		
 		writer.newLine();
 
@@ -58,16 +75,22 @@ public class TransformCompiler extends BaseCompiler {
 		// Calculate and write the needed teleport command to arrive at position 1
 		Vector desiredTeleport = Vector.multiply(locOffset, -1);
 		
+		
 		float xRot = (float)frame.getJSONArray("rot").getDouble(0);
 		float yRot = (float)frame.getJSONArray("rot").getDouble(1);
 		
-		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+length+"}] ~"+
-				String.format("%.10f",desiredTeleport.X())+" ~"+String.format("%.10f",desiredTeleport.Y())+
-				" ~"+String.format("%.10f",desiredTeleport.Z())+" "+xRot+" "+yRot);
+		// Convert to local space
+		Vector localTeleport = desiredTeleport.rotateDegrees(yRot*-1, xRot*-1, 0);
+		
+		// Get relative rotation
+		
+		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+length+"}] ^"+
+				String.format("%.10f",localTeleport.X())+" ^"+String.format("%.10f",localTeleport.Y())+
+				" ^"+String.format("%.10f",localTeleport.Z())+" ~"+xRot*-1+" ~"+yRot*-1);
 	}
 	
 	// Method to turn JSONArrays to vectors
-	protected Vector JSONArrayToVector(JSONArray array) throws JSONException {
+	protected static Vector JSONArrayToVector(JSONArray array) throws JSONException {
 		return new Vector(array.getDouble(0), array.getDouble(1), array.getDouble(2));
 	}
 

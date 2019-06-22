@@ -43,6 +43,60 @@ public class Vector {
 	}
 	
 	/**
+	 * Returns if this vector equals the passed vector
+	 * @param Vector to compare
+	 * @return
+	 */
+	public boolean equals(Vector vec) {
+		return (X == vec.X() && Y == vec.Y() && Z == vec.Z());
+	}
+	
+	/**
+	 * Returns this vector in the format <X,Y,Z>
+	 */
+	public String toString() {
+		return "<"+X+","+Y+","+Z+">";
+		
+	}
+	
+	/**
+	 * Rotate vector around origin by given radians
+	 * @param xRat
+	 * @param yRat
+	 * @param zRat
+	 * @return Rotated vector
+	 */
+	public Vector rotateRadians(double xRat, double yRat, double zRat) {
+		// Rotate around X axis
+		double x1 = X;
+		double y1 = Y*Math.cos(xRat) - Z*Math.sin(xRat);
+		double z1 = Y*Math.sin(xRat) + Z*Math.cos(xRat);
+		
+		// Rotate around Y axis
+		double x2 = x1*Math.cos(yRat) + z1*Math.sin(yRat);
+		double y2 = y1;
+		double z2 = -1*x1*Math.sin(yRat) + z1*Math.cos(yRat);
+		
+		// Rotate around Z axis
+		double x3 = x2*Math.cos(zRat) - y2*Math.sin(zRat);
+		double y3 = x2*Math.sin(zRat) + y2*Math.cos(zRat);
+		double z3 = z2;
+		
+		return new Vector(x3,y3,z3);
+	}
+	
+	/**
+	 * Rotate vector around origin by given degrees
+	 * @param xDeg
+	 * @param yDeg
+	 * @param zDeg
+	 * @return Rotated vector
+	 */
+	public Vector rotateDegrees(double xDeg, double yDeg, double zDeg) {
+		return rotateRadians(Math.toRadians(xDeg), Math.toRadians(yDeg), Math.toRadians(zDeg));
+	}
+	
+	/**
 	 * Adds vector 1 and vector 2
 	 * @param vec1
 	 * @param vec2
@@ -81,4 +135,5 @@ public class Vector {
 	public static Vector divide(Vector vec, float val) {
 		return multiply(vec, 1/val);
 	}
+	
 }

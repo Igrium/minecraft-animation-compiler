@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'eclipse'
+}
+
+version = '0.0.1'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Minecraft Animation Compiler',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'org.metaversemedia.mcanim.Main'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+application {
+    mainClassName = "org.metaversemedia.mcanim.Main"
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile group: 'org.json', name: 'json', version: '20180813'  
+}
+
+run {
+    standardInput = System.in
+}

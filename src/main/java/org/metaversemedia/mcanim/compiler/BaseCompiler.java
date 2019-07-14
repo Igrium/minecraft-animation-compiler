@@ -92,7 +92,8 @@ public abstract class BaseCompiler {
 	private void writeMetadata(JSONObject animation, BufferedWriter writer) throws IOException, JSONException {
 		writer.write("# Created with Igrium's Minecraft Animation System");
 		writer.newLine();
-		writer.write("# length: "+animation.getJSONArray("frames").length()+", name: "+animation.getString("name"));
+		writer.write("# length: "+animation.getJSONArray("frames").length()+
+				", name: "+animation.getString("name")+", type: "+animation.getString("type"));
 		writer.newLine();
 		writer.newLine();
 	}

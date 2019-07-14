@@ -58,8 +58,8 @@ public class TransformCompiler extends BaseCompiler {
 		
 		// Write command
 		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+frame+"}] ^"+
-				String.format("%.10f",localCoords.X())+" ^"+String.format("%.10f",localCoords.Y())+
-				" ^"+String.format("%.10f",localCoords.Z())+" ~"+xRot+" ~"+yRot);
+				formatFloat(localCoords.X())+" ^"+formatFloat(localCoords.Y())+
+				" ^"+formatFloat(localCoords.Z())+" ~"+xRot+" ~"+yRot);
 		
 		writer.newLine();
 
@@ -85,13 +85,17 @@ public class TransformCompiler extends BaseCompiler {
 		// Get relative rotation
 		
 		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+length+"}] ^"+
-				String.format("%.10f",localTeleport.X())+" ^"+String.format("%.10f",localTeleport.Y())+
-				" ^"+String.format("%.10f",localTeleport.Z())+" ~"+xRot*-1+" ~"+yRot*-1);
+				formatFloat(localTeleport.X())+" ^"+formatFloat(localTeleport.Y())+
+				" ^"+formatFloat(localTeleport.Z())+" ~"+xRot*-1+" ~"+yRot*-1);
 	}
 	
 	// Method to turn JSONArrays to vectors
 	protected static Vector JSONArrayToVector(JSONArray array) throws JSONException {
 		return new Vector(array.getDouble(0), array.getDouble(1), array.getDouble(2));
+	}
+	
+	protected static String formatFloat(float inFloat) {
+		return String.format("%.10f",inFloat);
 	}
 
 }

@@ -87,6 +87,7 @@ public class TransformCompiler extends BaseCompiler {
 		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+length+"}] ^"+
 				formatFloat(localTeleport.X())+" ^"+formatFloat(localTeleport.Y())+
 				" ^"+formatFloat(localTeleport.Z())+" ~"+xRot*-1+" ~"+yRot*-1);
+		writer.newLine();
 	}
 	
 	// Method to turn JSONArrays to vectors

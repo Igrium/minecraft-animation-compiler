@@ -1,0 +1,36 @@
+{ 
+	"name":"aniamtion name",
+	"type":"armature",
+	"id":5,
+	"looping":false,
+	"resetWhenDone":true,
+	"frames":[
+		{
+			"loc":[5,0,0],
+			"rot":[0,0],
+			"pose":{
+				"Body":[0,0,0],
+				"LeftArm":[0,0,0],
+				"RightArm":[0,0,0],
+				"LeftLeg":[0,0,0],
+				"RightLeg":[0,0,0],
+				"Head":[0,0,0]
+			}
+		},
+		{
+			"loc":[10,0,0],
+			"rot":[0,0],
+			"pose":{
+				"Body":[0,0,0],
+				"LeftArm":[0,0,0],
+				"RightArm":[0,0,0],
+				"LeftLeg":[0,0,0],
+				"RightLeg":[0,0,0],
+				"Head":[0,0,0]
+			}
+		}
+	],
+	"commands":[
+		{'frame':1, 'contents':"say minecraft command goes here"}
+	]
+}

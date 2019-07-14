@@ -77,6 +77,8 @@ public abstract class BaseCompiler {
 		
 		if (type.equals("transform")) {
 			compiler = new TransformCompiler(); 
+		} else if(type.equals("armature")) {
+			compiler = new ArmatureCompiler();
 		} else {
 			System.out.println("Unknown type: "+type);
 			throw new JSONException("Unknown type: "+type);

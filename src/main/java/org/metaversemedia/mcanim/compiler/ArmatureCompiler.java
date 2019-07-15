@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.metaversemedia.mcanim.Constants;
+import org.metaversemedia.mcanim.util.MCData;
 
 public class ArmatureCompiler extends TransformCompiler {
 	
@@ -17,7 +18,7 @@ public class ArmatureCompiler extends TransformCompiler {
 		// Pose in command is formatted like a JSON object,
 		// so we can just write the JSON object to the command
 		writer.write("data merge entity @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+frame+"}] "
-				+ "{Pose:"+frameObject.getJSONObject("pose")+"}");
+				+ "{Pose:"+MCData.formatObject(frameObject.getJSONObject("pose"))+"}");
 		writer.newLine();
 	}
 	
@@ -29,7 +30,7 @@ public class ArmatureCompiler extends TransformCompiler {
 		JSONObject startFrame = animation.getJSONArray("frames").getJSONObject(0);
 		
 		writer.write("data merge entity @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+length+"}] "
-				+ "{Pose:"+startFrame.getJSONObject("pose")+"}");
+				+ "{Pose:"+MCData.formatObject(startFrame.getJSONObject("pose"))+"}");
 		writer.newLine();
 	}
 }

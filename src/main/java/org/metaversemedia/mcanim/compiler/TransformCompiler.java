@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.metaversemedia.mcanim.Constants;
+import org.metaversemedia.mcanim.util.MCData;
 import org.metaversemedia.mcanim.util.Vector;
 
 /**
@@ -58,8 +59,8 @@ public class TransformCompiler extends BaseCompiler {
 		
 		// Write command
 		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+frame+"}] ^"+
-				formatFloat(localCoords.X())+" ^"+formatFloat(localCoords.Y())+
-				" ^"+formatFloat(localCoords.Z())+" ~"+xRot+" ~"+yRot);
+				MCData.formatFloat(localCoords.X(), false)+" ^"+MCData.formatFloat(localCoords.Y(), false)+
+				" ^"+MCData.formatFloat(localCoords.Z(), false)+" ~"+xRot+" ~"+yRot);
 		
 		writer.newLine();
 
@@ -85,8 +86,8 @@ public class TransformCompiler extends BaseCompiler {
 		// Get relative rotation
 		
 		writer.write("execute at @s run teleport @s[scores={"+ Constants.FRAMEOBJECTIVE + "="+length+"}] ^"+
-				formatFloat(localTeleport.X())+" ^"+formatFloat(localTeleport.Y())+
-				" ^"+formatFloat(localTeleport.Z())+" ~"+xRot*-1+" ~"+yRot*-1);
+				MCData.formatFloat(localTeleport.X(), false)+" ^"+MCData.formatFloat(localTeleport.Y(), false)+
+				" ^"+MCData.formatFloat(localTeleport.Z(), false)+" ~"+xRot*-1+" ~"+yRot*-1);
 		writer.newLine();
 	}
 	
@@ -95,8 +96,4 @@ public class TransformCompiler extends BaseCompiler {
 		return new Vector(array.getDouble(0), array.getDouble(1), array.getDouble(2));
 	}
 	
-	protected static String formatFloat(float inFloat) {
-		return String.format("%.10f",inFloat);
-	}
-
 }

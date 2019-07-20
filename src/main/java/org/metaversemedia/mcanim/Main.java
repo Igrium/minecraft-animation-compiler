@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.metaversemedia.mcanim.compiler.BaseCompiler;
@@ -14,12 +15,17 @@ import org.metaversemedia.mcanim.compiler.BaseCompiler;
 public class Main {
 
 	public static void main(String[] args) {
-		// Check usage
-		if (args.length < 2) {
-			System.out.println("Usage: compiler <input file> <destination path>");
+		// Check arguements and set output path if second arg is nonexistent
+		String outputPath = null;
+		if(args.length == 0) {
+			System.out.println("Usage: compiler <input file> [destination path]");
 			System.exit(64);
+		} else if(args.length == 1) {
+			outputPath = FilenameUtils.getFullPath(args[0]);
+		} else {
+			outputPath = args[1];
 		}
-		
+
 		// Load JSONObject from disk
 		System.out.println("Loading file: "+args[0]);
 		JSONObject animation = null;
@@ -39,9 +45,9 @@ public class Main {
 		}
 		
 		// Compile animation
-		System.out.println("Writing function");
+		System.out.println("Writing function to " + outputPath);
 		try {
-			BaseCompiler.smartCompile(animation, Paths.get(args[1]));
+			BaseCompiler.smartCompile(animation, Paths.get(outputPath));
 		} catch (JSONException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

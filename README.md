@@ -7,7 +7,7 @@ To install, first make sure you have Java installed on your computer. If you don
 Once you have obtained Java, either download this program from the releases tab of this repo or download the source code and compile it yourself. The source code version will be more up to date, but might be more unstable, as it is under development.
 
 ## To Use
-The Minecraft Animation Compiler is a command line program, which means you'll have to launch it from the command line. To do this, open Command Prompt on Windows or Terminal on Mac and navigate to the folder where you downloaded the jar. To compile an animation, type `java -jar mcanim.jar [path to json] [path to destination folder]`.
+The Minecraft Animation Compiler is a command line program, which means you'll have to launch it from the command line. To do this, open Command Prompt on Windows or Terminal on Mac and navigate to the folder where you downloaded the jar. To compile an animation, type `java -jar mcanim.jar <path to json> [path to destination folder]`.
 
 To play the animation ingame, create a dummy objective called `mcanim.frame` and initialize it to `0` for each entity which you plan to play an animation on. This objective can be manipulated to change an entity's position in the animation. Then, call the animation function every tick in the scope of each entity on which you want to play the animation. The way you impliment this is up to you.
 

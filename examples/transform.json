@@ -15,6 +15,6 @@
 		}
 	],
 	"commands":[
-		{'frame:1, 'contents':"say minecraft command goes here"}
+		{"frame":1, "contents":"say minecraft command goes here"}
 	]
 }

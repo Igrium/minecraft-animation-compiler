@@ -93,7 +93,7 @@ public class TransformCompiler extends BaseCompiler {
 	
 	// Method to turn JSONArrays to vectors
 	protected static Vector JSONArrayToVector(JSONArray array) throws JSONException {
-		return new Vector(array.getDouble(0), array.getDouble(1), array.getDouble(2));
+		return new Vector((float) array.getDouble(0), (float) array.getDouble(1), (float) array.getDouble(2));
 	}
 	
 }
